@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Neural Override: Cybernetic Breach — A cyberpunk hacking reflex game" />
+  <title>Neural Override: Cybernetic Breach</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       START / TITLE SCREEN
+  ══════════════════════════════════════════════ -->
+  <div id="screen-start" class="screen active">
+    <div class="rain-bg" id="rain-bg-start"></div>
+    <div class="start-content">
+      <div class="logo-box">
+        <div class="logo-sub">[ SISTEMA: HACKEADO ]</div>
+        <h1 class="logo-title">NEURAL OVERRIDE</h1>
+        <div class="logo-sub">CYBERNETIC BREACH v3.1.4</div>
+      </div>
+      <div class="instructions-box">
+        <h2>// INSTRUÇÕES DE INVASÃO //</h2>
+        <p class="tip" style="margin-bottom:10px;">As 5 colunas na base do jogo são: <span class="hl">Z &nbsp; X &nbsp;
+            C &nbsp; V
+            &nbsp; B</span></p>
+        <table class="instr-table">
+          <tr>
+            <th>PACOTE</th>
+            <th>FORMATO</th>
+            <th>AÇÃO</th>
+          </tr>
+          <tr>
+            <td>Padrão</td>
+            <td>RT<span class="col-lane">7</span></td>
+            <td>Pressione a <span class="hl">tecla da coluna</span> (Z/X/C/V/B)</td>
+          </tr>
+          <tr>
+            <td>Criptografado</td>
+            <td>@X2<span class="col-lane">4</span></td>
+            <td><span class="hl">SHIFT + tecla da coluna</span></td>
+          </tr>
+          <tr>
+            <td>Malware</td>
+            <td>A!<span class="col-lane">5</span></td>
+            <td><span class="col-danger">NÃO pressione nada</span> — deixe passar</td>
+          </tr>
+          <tr>
+            <td>Vírus</td>
+            <td>😈</td>
+            <td>Pressione <span class="hl">ESPAÇO</span> no momento do impacto</td>
+          </tr>
+        </table>
+        <h2 style="margin-top:18px;">// POWER-UPS //</h2>
+        <table class="instr-table">
+          <tr>
+            <td><span class="hl">[1] SWORD</span></td>
+            <td>15s — qualquer tecla conta como acerto</td>
+          </tr>
+          <tr>
+            <td><span class="hl">[2] SHIELD</span></td>
+            <td>15s — erros não acumulam no contador</td>
+          </tr>
+          <tr>
+            <td><span class="hl">[3] OVERCLOCK</span></td>
+            <td>15s — slow motion (50% velocidade)</td>
+          </tr>
+        </table>
+        <p class="tip">A cada 50 pts (5 circuitos) → ganhe 1 power-up aleatório</p>
+        <p class="tip">Cada <span class="hl">6 pontos</span> = 1 circuito &nbsp;|&nbsp; Jogo termina ao preencher os
+          <span class="hl">30 circuitos</span>
+        </p>
+        <p class="tip col-danger">3 erros consecutivos → circuito perdido permanentemente ✕</p>
+        <p class="tip">Criptografado: pode segurar SHIFT <em>antes</em> do alvo chegar à zona!</p>
+        <p class="tip"><span class="hl">ENTER</span> — pausar / retomar &nbsp;|&nbsp; <span class="hl">ESC</span> —
+          voltar ao menu</p>
+      </div>
+      <!-- Lane count selector -->
+      <div class="lane-selector">
+        <div class="lane-selector-label">// MODO DE COLUNAS //</div>
+        <div class="lane-options">
+          <label class="lane-opt">
+            <input type="radio" name="lane-mode" value="4" />
+            <span class="lane-opt-box">
+              <span class="lane-opt-num">4</span>
+              <span class="lane-opt-keys">Z · X · C · V</span>
+            </span>
+          </label>
+          <label class="lane-opt">
+            <input type="radio" name="lane-mode" value="5" checked />
+            <span class="lane-opt-box">
+              <span class="lane-opt-num">5</span>
+              <span class="lane-opt-keys">Z · X · C · V · B</span>
+            </span>
+          </label>
+        </div>
+      </div>
+      <!-- Difficulty selector -->
+      <div class="lane-selector" style="margin-top:10px;">
+        <div class="lane-selector-label">// DIFICULDADE //</div>
+        <div class="lane-options">
+          <label class="lane-opt">
+            <input type="radio" name="difficulty" value="1" checked />
+            <span class="lane-opt-box">
+              <span class="lane-opt-num" style="font-size:11px;">N1</span>
+              <span class="lane-opt-keys">Normal</span>
+            </span>
+          </label>
+          <label class="lane-opt">
+            <input type="radio" name="difficulty" value="2" />
+            <span class="lane-opt-box">
+              <span class="lane-opt-num" style="font-size:11px;">N2</span>
+              <span class="lane-opt-keys">+25%</span>
+            </span>
+          </label>
+          <label class="lane-opt">
+            <input type="radio" name="difficulty" value="3" />
+            <span class="lane-opt-box">
+              <span class="lane-opt-num" style="font-size:11px;">N3</span>
+              <span class="lane-opt-keys">+50%</span>
+            </span>
+          </label>
+          <label class="lane-opt">
+            <input type="radio" name="difficulty" value="4" />
+            <span class="lane-opt-box">
+              <span class="lane-opt-num" style="font-size:11px;">N4</span>
+              <span class="lane-opt-keys">+100%</span>
+            </span>
+          </label>
+          <label class="lane-opt">
+            <input type="radio" name="difficulty" value="5" />
+            <span class="lane-opt-box">
+              <span class="lane-opt-num" style="font-size:11px;">N5</span>
+              <span class="lane-opt-keys">+200%</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <button id="btn-start" class="btn-main">[ INICIAR INVASÃO ]</button>
+      <div class="scanline"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       GAME SCREEN
+  ══════════════════════════════════════════════ -->
+  <div id="screen-game" class="screen">
+    <!-- Red flash overlay for errors -->
+    <div id="flash-overlay"></div>
+
+    <!-- Pause overlay -->
+    <div id="pause-overlay">
+      <div class="pause-box">
+        <div class="pause-title">// PAUSADO //</div>
+        <div class="pause-hint">ENTER — retomar &nbsp;|&nbsp; ESC — menu</div>
+      </div>
+    </div>
+
+    <!-- Main canvas (game area) -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- HUD Panel (right side) -->
+    <div id="hud-panel">
+
+      <div class="hud-section" id="hud-header">
+        <div class="hud-label">[ NEURAL OVERRIDE ]</div>
+        <div class="hud-score-row">
+          <span class="hud-label">SCORE</span>
+          <span id="hud-score" class="hud-value">000</span>
+        </div>
+        <div class="hud-score-row">
+          <span class="hud-label">ERROS</span>
+          <span id="hud-errors" class="hud-value" style="color:var(--red)">000</span>
+        </div>
+        <div class="hud-score-row">
+          <span class="hud-label">TEMPO</span>
+          <span id="hud-time" class="hud-value">00:00</span>
+        </div>
+      </div>
+
+      <div class="hud-section">
+        <div class="hud-label">// HARDWARE PANEL //</div>
+        <div id="circuit-grid"></div>
+        <div class="hud-small" id="circuit-counter">0 / 30 CIRCUITOS</div>
+      </div>
+
+      <div class="hud-section">
+        <div class="hud-label">ESTABILIDADE DA CONEXÃO</div>
+        <div id="integrity-bar-wrap">
+          <div id="integrity-bar"></div>
+          <span id="integrity-label">4 / 4</span>
+        </div>
+        <div class="hud-small" id="integrity-errors">Erros consecutivos: 0</div>
+      </div>
+
+      <div class="hud-section">
+        <div class="hud-label">// POWER-UPS //</div>
+        <div id="powerup-slots">
+          <div class="pu-slot" id="pu-1" data-key="1">
+            <div class="pu-icon">⚔</div>
+            <div class="pu-name">SWORD</div>
+            <div class="pu-charges" id="pu-charges-1">x1</div>
+            <div class="pu-key">[1]</div>
+          </div>
+          <div class="pu-slot" id="pu-2" data-key="2">
+            <div class="pu-icon">🛡</div>
+            <div class="pu-name">SHIELD</div>
+            <div class="pu-charges" id="pu-charges-2">x1</div>
+            <div class="pu-key">[2]</div>
+          </div>
+          <div class="pu-slot" id="pu-3" data-key="3">
+            <div class="pu-icon">⚡</div>
+            <div class="pu-name">OVRCLK</div>
+            <div class="pu-charges" id="pu-charges-3">x1</div>
+            <div class="pu-key">[3]</div>
+          </div>
+        </div>
+        <div id="pu-active-label" class="hud-small"></div>
+      </div>
+
+      <div class="hud-section" id="hud-legend">
+        <div class="hud-label">// LEGENDA //</div>
+        <div class="legend-row"><span class="tag-std">AB7</span> → tecla da coluna</div>
+        <div class="legend-row"><span class="tag-enc">@X24</span> → SHIFT + coluna</div>
+        <div class="legend-row"><span class="tag-mal">A!5</span> → não pressione</div>
+        <div class="legend-row"><span class="tag-vir">😈</span> → ESPAÇO</div>
+        <div class="legend-row" style="margin-top:6px; font-size:9px; color: var(--green-dim);">6pts=1 circuito · máx
+          30 slots · 6pts=1🟢 · 3 erros=✕</div>
+        <div class="legend-row" style="font-size:9px; color: var(--green-dim);">ENTER pausar · ESC menu</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       END SCREEN
+  ══════════════════════════════════════════════ -->
+  <div id="screen-end" class="screen">
+    <div class="rain-bg" id="rain-bg-end"></div>
+    <div class="end-content">
+      <div class="end-header">[ INVASÃO CONCLUÍDA ]</div>
+      <h1 id="end-rank" class="end-rank">S</h1>
+      <div id="end-rank-label" class="end-rank-label">RANK S — ZERO QUEBRAS</div>
+      <div class="end-stats">
+        <div class="stat-row"><span>Pontuação Final</span><span id="end-score">0</span></div>
+        <div class="stat-row"><span>Circuitos Hackeados</span><span id="end-circuits">0 / 30</span></div>
+        <div class="stat-row"><span>Tempo Total</span><span id="end-time">00:00</span></div>
+        <div class="stat-row"><span>Quebras de Circuito</span><span id="end-breaks">0</span></div>
+        <div class="stat-row"><span>Acertos</span><span id="end-hits">0</span></div>
+        <div class="stat-row"><span>Erros</span><span id="end-misses">0</span></div>
+      </div>
+      <div class="end-buttons">
+        <button id="btn-restart" class="btn-main">[ REINICIAR INVASÃO ]</button>
+        <button id="btn-menu" class="btn-secondary">[ MENU PRINCIPAL ]</button>
+      </div>
+      <div class="scanline"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SCRIPTS (modules)
+  ══════════════════════════════════════════════ -->
+  <script src="js/ui.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/powerups.js"></script>
+  <script src="js/spawn.js"></script>
+  <script src="js/game.js"></script>
+
+</body>
+
+</html>

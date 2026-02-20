@@ -1,0 +1,811 @@
+/* ══════════════════════════════════════════════════════════════════
+   Neural Override: Cybernetic Breach — style.css
+   Cyberpunk Green-on-Black aesthetic with neon glow and glitch FX
+══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+/* ─── CSS Custom Properties ──────────────────────────────────────── */
+:root {
+  --green: #00FF66;
+  --green-dim: #00aa44;
+  --green-glow: rgba(0, 255, 102, 0.35);
+  --green-faint: rgba(0, 255, 102, 0.08);
+  --red: #FF1133;
+  --red-glow: rgba(255, 17, 51, 0.6);
+  --yellow: #FFD700;
+  --cyan: #00FFFF;
+  --black: #000000;
+  --dark: #050a06;
+  --panel-bg: rgba(0, 20, 8, 0.92);
+  --border: rgba(0, 255, 102, 0.3);
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-head: 'Orbitron', monospace;
+  --canvas-w: 560px;
+  --hud-w: 260px;
+}
+
+/* ─── Reset & Base ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: var(--black);
+  color: var(--green);
+  font-family: var(--font-mono);
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ─── SCREENS ────────────────────────────────────────────────────── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 10;
+}
+
+/* ─── SCANLINE OVERLAY ───────────────────────────────────────────── */
+.scanline {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.18) 2px,
+      rgba(0, 0, 0, 0.18) 4px);
+  z-index: 9999;
+  animation: scanMove 8s linear infinite;
+}
+
+@keyframes scanMove {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 100px;
+  }
+}
+
+/* ─── DIGITAL RAIN BACKGROUND ────────────────────────────────────── */
+.rain-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.18;
+  z-index: 0;
+}
+
+.rain-col {
+  position: absolute;
+  top: -100%;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--green);
+  white-space: pre;
+  animation: rainFall linear infinite;
+  text-shadow: 0 0 8px var(--green);
+}
+
+@keyframes rainFall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* ─── START SCREEN ───────────────────────────────────────────────── */
+.start-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-height: 98vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.logo-box {
+  text-align: center;
+  padding: 20px 40px;
+  border: 1px solid var(--green);
+  background: var(--green-faint);
+  box-shadow: 0 0 30px var(--green-glow), inset 0 0 20px rgba(0, 255, 102, 0.05);
+}
+
+.logo-title {
+  font-family: var(--font-head);
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--green);
+  text-shadow: 0 0 20px var(--green), 0 0 60px var(--green-glow);
+  letter-spacing: 6px;
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+.logo-sub {
+  font-size: 0.75rem;
+  color: var(--green-dim);
+  letter-spacing: 3px;
+  margin: 4px 0;
+}
+
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    text-shadow: 0 0 20px var(--green), 0 0 60px var(--green-glow);
+  }
+
+  50% {
+    text-shadow: 0 0 40px var(--green), 0 0 100px var(--green-glow), 0 0 4px #fff;
+  }
+}
+
+.instructions-box {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  padding: 18px 24px;
+  width: 680px;
+  max-width: 96vw;
+  box-shadow: 0 0 20px var(--green-glow);
+}
+
+.instructions-box h2 {
+  font-family: var(--font-head);
+  font-size: 0.75rem;
+  color: var(--green-dim);
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 8px var(--green-glow);
+}
+
+.instr-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.instr-table th {
+  color: var(--green-dim);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.instr-table td {
+  padding: 5px 8px;
+  border-bottom: 1px solid rgba(0, 255, 102, 0.08);
+  color: var(--green);
+}
+
+.col-lane {
+  color: var(--cyan);
+  font-weight: bold;
+}
+
+.col-danger {
+  color: var(--red);
+  text-shadow: 0 0 8px var(--red-glow);
+}
+
+.hl {
+  color: var(--yellow);
+}
+
+.tip {
+  margin-top: 8px;
+  font-size: 0.75rem;
+  color: var(--green-dim);
+  letter-spacing: 1px;
+}
+
+/* ─── LANE SELECTOR ──────────────────────────────────────────────── */
+.lane-selector {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  padding: 14px 20px;
+  width: 680px;
+  max-width: 96vw;
+  box-shadow: 0 0 16px var(--green-glow);
+  text-align: center;
+}
+
+.lane-selector-label {
+  font-family: var(--font-head);
+  font-size: 0.68rem;
+  color: var(--green-dim);
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.lane-options {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Hide the native radio */
+.lane-opt input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.lane-opt-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 32px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+
+.lane-opt-box:hover {
+  border-color: var(--green);
+  background: var(--green-faint);
+  box-shadow: 0 0 10px var(--green-glow);
+}
+
+.lane-opt input[type="radio"]:checked+.lane-opt-box {
+  border-color: var(--green);
+  background: rgba(0, 255, 102, 0.12);
+  box-shadow: 0 0 20px var(--green-glow), inset 0 0 12px rgba(0, 255, 102, 0.06);
+}
+
+.lane-opt-num {
+  font-family: var(--font-head);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--green);
+  text-shadow: 0 0 12px var(--green);
+  line-height: 1;
+}
+
+.lane-opt-keys {
+  font-size: 0.7rem;
+  color: var(--green-dim);
+  letter-spacing: 2px;
+}
+
+.lane-opt input[type="radio"]:checked+.lane-opt-box .lane-opt-num {
+  text-shadow: 0 0 20px var(--green), 0 0 40px var(--green-glow);
+}
+
+.lane-opt input[type="radio"]:checked+.lane-opt-box .lane-opt-keys {
+  color: var(--green);
+}
+
+/* ─── BUTTONS ────────────────────────────────────────────────────── */
+.btn-main {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  letter-spacing: 4px;
+  color: var(--black);
+  background: var(--green);
+  border: none;
+  padding: 14px 40px;
+  cursor: pointer;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: all 0.15s ease;
+  box-shadow: 0 0 20px var(--green-glow);
+  text-shadow: none;
+}
+
+.btn-main:hover {
+  background: #fff;
+  box-shadow: 0 0 40px var(--green), 0 0 80px var(--green-glow);
+  transform: scale(1.04);
+}
+
+.btn-secondary {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  color: var(--green);
+  background: transparent;
+  border: 1px solid var(--green);
+  padding: 10px 28px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--green-faint);
+  box-shadow: 0 0 16px var(--green-glow);
+}
+
+/* ─── GAME SCREEN LAYOUT ─────────────────────────────────────────── */
+#screen-game {
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  background: var(--black);
+}
+
+#game-canvas {
+  display: block;
+  flex-shrink: 0;
+  background: #010801;
+  box-shadow: 0 0 40px rgba(0, 255, 102, 0.15);
+}
+
+/* ─── RED FLASH OVERLAY ──────────────────────────────────────────── */
+#flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--red);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 500;
+  transition: opacity 0.05s ease;
+}
+
+#flash-overlay.flash-active {
+  animation: redFlash 0.5s ease forwards;
+}
+
+@keyframes redFlash {
+  0% {
+    opacity: 0.45;
+  }
+
+  60% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ─── PAUSE OVERLAY ──────────────────────────────────────────────── */
+#pause-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 600;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+
+.pause-box {
+  border: 1px solid var(--green);
+  background: var(--panel-bg);
+  padding: 32px 60px;
+  text-align: center;
+  box-shadow: 0 0 40px var(--green-glow);
+}
+
+.pause-title {
+  font-family: var(--font-head);
+  font-size: 2rem;
+  letter-spacing: 6px;
+  color: var(--green);
+  text-shadow: 0 0 20px var(--green);
+  animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+.pause-hint {
+  margin-top: 14px;
+  font-size: 0.75rem;
+  color: var(--green-dim);
+  letter-spacing: 2px;
+}
+
+/* ─── HUD PANEL ──────────────────────────────────────────────────── */
+#hud-panel {
+  width: var(--hud-w);
+  background: var(--panel-bg);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--green-dim) transparent;
+}
+
+.hud-section {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hud-label {
+  font-size: 0.62rem;
+  color: var(--green-dim);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.hud-value {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  color: var(--green);
+  text-shadow: 0 0 12px var(--green);
+}
+
+.hud-score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.hud-small {
+  font-size: 0.62rem;
+  color: var(--green-dim);
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+/* ─── CIRCUIT GRID ───────────────────────────────────────────────── */
+#circuit-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.circuit-icon {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 2px;
+  border: 1px solid var(--green-dim);
+  background: transparent;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.circuit-icon::before {
+  content: '◈';
+  color: var(--green-dim);
+  font-size: 9px;
+  opacity: 0.4;
+}
+
+.circuit-icon.lit {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 0 8px var(--green), 0 0 16px var(--green-glow);
+  animation: circuitLight 0.4s ease;
+}
+
+.circuit-icon.lit::before {
+  color: var(--black);
+  opacity: 1;
+}
+
+@keyframes circuitLight {
+  0% {
+    transform: scale(1.4);
+    box-shadow: 0 0 20px var(--green);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Broken circuit — red X overlay */
+.circuit-icon.broken {
+  background: rgba(255, 17, 51, 0.18);
+  border-color: var(--red);
+  box-shadow: 0 0 8px rgba(255, 17, 51, 0.5);
+  color: var(--red);
+  font-size: 11px;
+  font-weight: bold;
+  animation: none;
+}
+
+.circuit-icon.broken::before {
+  display: none;
+}
+
+/* hide the ◈ glyph */
+
+/* ─── INTEGRITY BAR ──────────────────────────────────────────────── */
+#integrity-bar-wrap {
+  position: relative;
+  height: 18px;
+  background: rgba(255, 17, 51, 0.12);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+#integrity-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--green-dim), var(--green));
+  transition: width 0.3s ease, background 0.3s ease;
+  box-shadow: 0 0 8px var(--green-glow);
+}
+
+#integrity-label {
+  position: absolute;
+  right: 6px;
+  top: 1px;
+  font-size: 0.7rem;
+  color: var(--black);
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+/* ─── POWER-UP SLOTS ─────────────────────────────────────────────── */
+#powerup-slots {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.pu-slot {
+  flex: 1;
+  border: 1px solid var(--border);
+  background: var(--green-faint);
+  padding: 6px 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.pu-slot:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 10px var(--green-glow);
+}
+
+.pu-slot.empty {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pu-slot.active-pu {
+  border-color: var(--yellow);
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.5);
+  animation: puPulse 0.6s ease infinite alternate;
+}
+
+@keyframes puPulse {
+  from {
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  }
+
+  to {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+}
+
+.pu-icon {
+  font-size: 1.1rem;
+}
+
+.pu-name {
+  font-size: 0.5rem;
+  letter-spacing: 1px;
+  color: var(--green-dim);
+  margin-top: 2px;
+}
+
+.pu-charges {
+  font-family: var(--font-head);
+  font-size: 0.75rem;
+  color: var(--green);
+  margin-top: 2px;
+}
+
+.pu-key {
+  font-size: 0.55rem;
+  color: var(--green-dim);
+  letter-spacing: 1px;
+}
+
+#pu-active-label {
+  min-height: 14px;
+  text-align: center;
+  color: var(--yellow);
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+  letter-spacing: 2px;
+}
+
+/* ─── LEGEND ─────────────────────────────────────────────────────── */
+.legend-row {
+  font-size: 0.72rem;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tag-std {
+  background: var(--green);
+  color: var(--black);
+  padding: 1px 5px;
+  font-weight: bold;
+  border-radius: 2px;
+}
+
+.tag-enc {
+  background: var(--cyan);
+  color: var(--black);
+  padding: 1px 5px;
+  font-weight: bold;
+  border-radius: 2px;
+}
+
+.tag-mal {
+  background: var(--red);
+  color: #fff;
+  padding: 1px 5px;
+  font-weight: bold;
+  border-radius: 2px;
+}
+
+.tag-vir {
+  background: #1a0033;
+  color: #cc44ff;
+  padding: 1px 5px;
+  font-weight: bold;
+  border-radius: 2px;
+  border: 1px solid #cc44ff;
+}
+
+/* ─── END SCREEN ─────────────────────────────────────────────────── */
+.end-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+}
+
+.end-header {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  letter-spacing: 6px;
+  color: var(--green-dim);
+  text-shadow: 0 0 10px var(--green-glow);
+}
+
+.end-rank {
+  font-family: var(--font-head);
+  font-size: 8rem;
+  font-weight: 900;
+  color: var(--green);
+  text-shadow: 0 0 40px var(--green), 0 0 100px var(--green-glow);
+  animation: glowPulse 2s ease-in-out infinite;
+  line-height: 1;
+}
+
+.end-rank.rank-s {
+  color: var(--green);
+  text-shadow: 0 0 40px var(--green), 0 0 100px var(--green-glow);
+}
+
+.end-rank.rank-a {
+  color: var(--cyan);
+  text-shadow: 0 0 40px var(--cyan);
+}
+
+.end-rank.rank-b {
+  color: var(--yellow);
+  text-shadow: 0 0 40px var(--yellow);
+}
+
+.end-rank.rank-c {
+  color: var(--red);
+  text-shadow: 0 0 40px var(--red);
+}
+
+.end-rank-label {
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: var(--green-dim);
+}
+
+.end-stats {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  padding: 16px 30px;
+  min-width: 340px;
+  box-shadow: 0 0 20px var(--green-glow);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.stat-row span:last-child {
+  font-family: var(--font-head);
+  color: var(--green);
+  text-shadow: 0 0 6px var(--green);
+}
+
+.end-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--green-dim);
+  border-radius: 2px;
+}
+
+/* ─── Responsive — very wide or very narrow ──────────────────────── */
+@media (max-height: 600px) {
+  .logo-title {
+    font-size: 1.8rem;
+  }
+
+  .instructions-box {
+    padding: 10px 14px;
+  }
+
+  .instr-table td {
+    padding: 3px 6px;
+  }
+}
