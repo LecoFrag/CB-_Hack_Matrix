@@ -85,6 +85,9 @@
 
     // ─── AUDIO ENGINE ─────────────────────────────────────────────────
     let audioCtx = null, droneNode = null, droneGain = null;
+    let bgMusic = new Audio('queda_blocos.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.6;
 
     function ensureAudio() {
         if (audioCtx) return;
@@ -809,10 +812,12 @@
         if (GS.status === 'playing') {
             GS.status = 'paused';
             cancelAnimationFrame(rafId);
+            bgMusic.pause();
             UI.showPause(true);
         } else if (GS.status === 'paused') {
             GS.status = 'playing';
             UI.showPause(false);
+            bgMusic.play().catch(e => console.warn("Audio autoplay blocked", e));
             GS.lastFrameTs = performance.now();
             rafId = requestAnimationFrame(gameLoop);
         }
@@ -911,6 +916,8 @@
         UI.showScreen('game');
         resizeCanvas();
         startDrone(GS.speed);
+        bgMusic.currentTime = 0;
+        bgMusic.play().catch(e => console.warn("Audio autoplay blocked", e));
 
         GS.lastFrameTs = performance.now();
         rafId = requestAnimationFrame(gameLoop);
@@ -1012,6 +1019,7 @@
         GS.status = 'ending';
         cancelAnimationFrame(rafId);
         stopDrone();
+        bgMusic.pause();
         InputHandler.disable();
 
         // Run 5-second ending animation, then show results
@@ -1044,6 +1052,7 @@
         GS.status = 'idle';
         cancelAnimationFrame(rafId);
         stopDrone();
+        bgMusic.pause();
         InputHandler.disable();
         UI.showPause(false);
         UI.showScreen('start');
